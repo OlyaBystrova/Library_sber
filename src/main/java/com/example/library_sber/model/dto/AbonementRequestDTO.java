@@ -10,5 +10,5 @@ import java.util.List;
 public class AbonementRequestDTO{
     String fullName;
     Date openDate;
-    private List<String> roles = new ArrayList<>();
+//    private List<String> roles = new ArrayList<>();
 }

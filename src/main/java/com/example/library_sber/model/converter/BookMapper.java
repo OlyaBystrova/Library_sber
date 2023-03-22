@@ -9,7 +9,7 @@ public final class BookMapper {
         Book book = new Book();
         book.setBookTitle(bookRequestDTO.getBookTitle());
         book.setPublicationDate(bookRequestDTO.getPublicationDate());
-        book.setQuantity(book.getQuantity());
+        book.setQuantity(bookRequestDTO.getQuantity());
         return book;
     }
 

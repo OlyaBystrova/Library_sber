@@ -1,5 +1,6 @@
 package com.example.library_sber.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.List;
 @Setter
 @Getter
 @EqualsAndHashCode
+@Table(name="Abonement")
 public class Abonement {
     @Id
     @Column(name = "abonement_id")
@@ -29,12 +31,13 @@ public class Abonement {
     private Date openDate;
 
     @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
     private List<Book> books;
 
-    @ManyToMany
-    @JoinTable(name = "abonement_roles",
-            joinColumns = @JoinColumn(name = "abonement_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(name = "abonement_roles",
+//            joinColumns = @JoinColumn(name = "abonement_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private List<Role> roles = new ArrayList<>();
 
 }

@@ -43,7 +43,7 @@ public class BookControllerCl {
         }
     }
 
-    @GetMapping("/books/{title}")
+    @GetMapping("/books/title/{bookTitle}")
     public ResponseEntity<List<BookRequestDTO>> getBookByTitle(@PathVariable String bookTitle) {
         Optional<Book> books = bookService.getBookByTitle(bookTitle);
         if (!books.isEmpty()) {

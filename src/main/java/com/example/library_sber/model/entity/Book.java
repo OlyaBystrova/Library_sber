@@ -1,5 +1,6 @@
 package com.example.library_sber.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Setter
 @Getter
 @EqualsAndHashCode
+@Table(name = "Book")
 public class Book {
     @Id
     @Column(name = "book_id")
@@ -31,6 +33,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "abonement_id")
+    @JsonBackReference
     private Abonement owner;
 
     @Column(name = "taken_at")
@@ -39,4 +42,5 @@ public class Book {
 
     @Transient
     private boolean expired;
+
 }

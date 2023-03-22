@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class BookRequestDTO{
-    Long bookId;
+//    Long bookId;
     String bookTitle;
     Date publicationDate;
     Long quantity;

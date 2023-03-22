@@ -47,7 +47,7 @@ public class AbonementControllerLibr {
         }
     }
 
-    @GetMapping("/abonements/{name}")
+    @GetMapping("/abonements/name/{name}")
     public ResponseEntity<AbonementRequestDTO> getAbonementByName(@PathVariable String name) {
         Optional<Abonement> abonementOptional = abonementService.getAbonementByFullName(name);
         if (abonementOptional.isPresent()) {

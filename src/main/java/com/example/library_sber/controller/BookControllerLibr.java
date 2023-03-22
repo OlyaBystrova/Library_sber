@@ -6,6 +6,8 @@ import com.example.library_sber.model.dto.AbonementRequestDTO;
 import com.example.library_sber.model.dto.BookRequestDTO;
 import com.example.library_sber.model.entity.Abonement;
 import com.example.library_sber.model.entity.Book;
+import com.example.library_sber.repository.AbonementRepository;
+import com.example.library_sber.service.AbonementService;
 import com.example.library_sber.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,8 +28,9 @@ import java.util.NoSuchElementException;
 // Добавить сваггеровские аннотации
 public class BookControllerLibr {
     private final BookService bookService;
+    private final AbonementRepository abonementRepository;
 
-    @GetMapping("/books/{id}/owner")
+    @GetMapping("/books/{bookId}/owner")
     public ResponseEntity<Abonement> getBookOwner(@PathVariable Long bookId) {
         Abonement abonement = bookService.getBookOwner(bookId);
         if (abonement != null) {
@@ -40,7 +43,7 @@ public class BookControllerLibr {
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody BookRequestDTO dto) {
         Book book = BookMapper.mapToEntity(dto);
-        book.setBookId(book.getBookId());
+        book.setQuantity(dto.getQuantity());
         return new ResponseEntity<>(bookService.addBook(book), HttpStatus.CREATED);
     }
 
@@ -53,6 +56,7 @@ public class BookControllerLibr {
         BookRequestDTO updatedBookRequestDTO = BookMapper.mapToDTO(book);
         return new ResponseEntity<>(updatedBookRequestDTO, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/books/{id}")
     public void deleteBook(@PathVariable Long id) {
@@ -74,7 +78,8 @@ public class BookControllerLibr {
 
     @PostMapping("/{bookId}/assign")
     public ResponseEntity<?> assignBook(@PathVariable Long bookId, @RequestBody AbonementRequestDTO abonementRequestDTO) {
-        Abonement abonement = AbonementMapper.mapToEntity(abonementRequestDTO);
+        Abonement abonement = abonementRepository.findByFullName(abonementRequestDTO.getFullName())
+                .orElseThrow(() -> new NoSuchElementException("Abonement not found"));
         try {
             bookService.assign(bookId, abonement);
             return ResponseEntity.ok().build();
